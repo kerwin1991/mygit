@@ -1,0 +1,15 @@
+server:
+  port: 8088
+
+#person:
+#  birthday: 2018/12/12
+#  age: 18
+#  kvs: {gender: F, addr: shanxisheng}
+#  likes:
+#    - girl
+#    - boy
+#    - children
+#  dog:
+#    color: black
+#    ownerName: kerwin
+#  last-name: zhangsan
