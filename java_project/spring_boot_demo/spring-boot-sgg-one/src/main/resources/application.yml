@@ -1,5 +1,9 @@
 server:
   port: 8088
+spring:
+  profiles:
+    active: dev
+
 
 #person:
 #  birthday: 2018/12/12
@@ -13,3 +17,22 @@ server:
 #    color: black
 #    ownerName: kerwin
 #  last-name: zhangsan
+
+
+
+---
+
+
+server:
+  port: 8087
+spring:
+  profiles: dev
+
+
+
+---
+
+server:
+  port: 8086
+spring:
+  profiles: prod

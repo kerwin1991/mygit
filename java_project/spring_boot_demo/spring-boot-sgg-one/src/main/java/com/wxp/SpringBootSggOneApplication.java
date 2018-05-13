@@ -27,7 +27,7 @@ public class SpringBootSggOneApplication {
 	 * 配置类 替换 配置文件  推荐全注解开发  @Configuration
 	 *
 	 *
-	 *
+	 * 约定优于配置的理念
 	 *
 	 *
 	 *
