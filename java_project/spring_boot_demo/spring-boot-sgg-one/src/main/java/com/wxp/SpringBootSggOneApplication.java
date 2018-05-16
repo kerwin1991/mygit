@@ -29,9 +29,24 @@ public class SpringBootSggOneApplication {
 	 *
 	 * 约定优于配置的理念
 	 *
+	 * 根据当前不同的条件判断，决定这个配置类是否生效
 	 *
+	 * 精髓：springboot启动加载大量自动配置类；我们看我们需要的功能有没有springboot默认写好的自动配置类；再看，这个自动配置类中到底配了哪些组件，只要我们要用的组件有，我们就不需要再来配置了；
+	 * 给容器中自动配置类添加组件的时候，会从properties类中获取某些属性值，我们就可以在配置文件中指定这些属性值；
+	 * xxxAutoConfiguration : 自动配置类；给容器中添加配置组件
+	 * xxxProperties封装配置文件的内容
+	 *
+	 *
+	 * @Conditional派生注解  @Conditional*
+	 * 必须是该注解指定的条件成立，才给容器中添加
+	 * 自动配置类，必须在一定的条件下才能生效，java版本，导入了什么依赖，等
+	 *
+	 * debut=true  开启springboot的debug模式
+	 * Positive matches ：自动配置类启用的
+	 * Negative matches ：没有启用的
 	 *
 	 * */
+
 }
 
 
