@@ -11,6 +11,7 @@
         <module>microservice-cloud-api</module>
         <module>microservice-cloud-provider-dept-8001</module>
         <module>microservice-cloud-concumer-dept-80</module>
+        <module>microservice-cloud-eureka-7001</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -72,5 +73,29 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--支持/info-->
+    <!--支持yml中动态读取项目变量名：build.version: $project.version$-->
+    <build>
+        <finalName>microservice-cloud</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <!--$ 表示 可以 读取 变量 $project.version$-->
+                        <delimiter>$</delimiter>
+                    </delimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

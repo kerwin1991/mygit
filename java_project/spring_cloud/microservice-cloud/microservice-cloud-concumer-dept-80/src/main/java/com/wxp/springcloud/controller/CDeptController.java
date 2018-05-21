@@ -41,8 +41,14 @@ public class CDeptController {
     public Dept get(@PathVariable("id") Long id) {
         return restTemplate.getForObject(REST_URL_PREFIX + "/dept/get/"+id, Dept.class);
     }
-    @RequestMapping(value = "/dept/list")
+    @RequestMapping(value = "/dept/get/list")
     public List<Dept> get() {
         return restTemplate.getForObject(REST_URL_PREFIX + "/dept/get/list", List.class);
+    }
+
+    // 80 发现服务
+    @RequestMapping(value = "/dept/discovery")
+    public Object discovery() {
+        return restTemplate.getForObject(REST_URL_PREFIX + "/dept/discovery", Object.class);
     }
 }

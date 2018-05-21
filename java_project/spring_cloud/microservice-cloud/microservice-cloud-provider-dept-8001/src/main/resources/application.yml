@@ -23,3 +23,18 @@ spring:
       initial-size: 5         # 初始化连接数
       max-total: 5            # 最大连接数
       max-wait-millis: 200    # 等待连接获取的最大超时时间
+
+# 向 eureka server 注册服务
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    instance-id: microservice-dept-8001
+    prefer-ip-address: true
+# eureka info 信息 http://ip:port/info
+info:
+  app.name: wxp-springcloud
+  company.name: www.e-nci.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

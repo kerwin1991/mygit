@@ -77,4 +77,36 @@
 
     微服务划的核心就是将统一的一站式应用，根据业务拆分成一个一个的服务，彻底的去耦合，每一个微服务提供单个业务功能的服务，一个服务做一件事。从技术角度看就是一种小而独立的处理过程，类似进程概念，能够自行单独启动或销毁，拥有自己独立的数据库。
 
+## Eureka ##
 
+0. 简介
+
+    Eureka是Netflix的一个子模块，是一个基于REST的服务，用于定位服务，以实现云端中间层服务发现和故障转移。Netflix在设计Eureka时遵守的是AP原则。？
+服务注册和发现对于微服务架构是非常重要的，有了服务注册发现，只需要使用服务的标识符，就可以访问到服务，而不需要修改服务调用的配置文件了。
+功能类似于dubbo的注册中心，比如Zookeeper。
+
+1. 引入cloud的一个新技术组件步骤
+
+    - 新增一个maven坐标，如：
+    ```
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-eureka-server</artifactId>
+    </dependency>
+    ```
+    - 启动类上标注启动该新组件的注解，如：@EnableEurekaServer
+    - java业务逻辑编码
+
+2. Eureka自我保护机制
+
+    某时刻某一个微服务，eureka不会立刻清理，依旧会对该微服务的信息进行保存。(好死不如赖活着)。
+
+3. 在Eureka服务监控页面，点击注册的服务名称时，默认http://hostname:port/info，通过修改后，http://ip:port/info，需要引入依赖
+    ```
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    ```
+    
+    - 对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息
