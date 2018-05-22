@@ -110,3 +110,34 @@
     ```
     
     - 对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息
+    
+4. eureka集群配置
+    
+    在不同的机器/服务器，配置相同的服务，对外提供一个超大运算的整体。
+    
+    
+5. CAP
+
+    - RDBMS(mysql,oracle,sqlServer) ===== ACID 原则
+        A atomicity 原子性；C consistency 一致性； I isolation 独立性； D durability 持久性。
+    
+    - NoSql(redis,mongdb) ===== CAP 原则
+        C consistency 强一致性； A availability 可用性； P partition tolerance 分区容错性。
+
+    - 在一个分布式系统里，有一句话，CAP的三进二:任何一个分布式系统，没有办法同时满足，强一致，高可用，分区容错。
+      如，对于淘宝网址，1111当天，如果让你来选择，选  AP?   CP?
+      当天要选AP，P是绝对要保证的，当天保证可用A。对于一致性C，后面再慢慢核对统计。
+
+
+
+## Ribbon ##
+
+Spring Cloud Ribbon 是基于 Netflix Ribbon实现的一套 客户端 负载均衡 的工具。
+
+
+
+
+
+附：
+
+- hosts文件路径：C:\Windows\System32\drivers\etc
