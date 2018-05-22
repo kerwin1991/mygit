@@ -134,8 +134,9 @@
 
 Spring Cloud Ribbon 是基于 Netflix Ribbon实现的一套 客户端 负载均衡 的工具。
 
+[Github地址](https://github.com/Netflix/ribbon)
 
-
+Ribbon和Eureka整合后，Consumer可以直接调用服务而不用再关心地址和端口号。
 
 
 附：

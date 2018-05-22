@@ -24,7 +24,10 @@ public class CDeptController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String REST_URL_PREFIX = "http://localhost:8001";
+    // 写死是不对的 通过微服务名称调用服务
+    //private static final String REST_URL_PREFIX = "http://localhost:8001";
+    // 通过微服务名称获得服务
+    private static final String REST_URL_PREFIX = "http://MICROSERVICE-CLOUD-DEPT";
 
     /**
      * Rest请求地址，请求参数，HTTP响应被转换成的对象类型
