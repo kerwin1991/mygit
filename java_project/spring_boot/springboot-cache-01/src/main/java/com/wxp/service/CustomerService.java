@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  *@CacheConfig 可以定义类中公共注解属性 方法上的注解 value 属性可以省略
  */
-@CacheConfig(cacheNames = {"cust"})
+@CacheConfig(cacheNames = {"cust"}, cacheManager = "customerRedisCacheManager")
 @Service
 public class CustomerService {
     @Autowired
