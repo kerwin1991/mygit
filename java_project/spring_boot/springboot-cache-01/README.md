@@ -102,7 +102,15 @@ protected Object lookup(Object key)
 0. 引入启动 spring-boot-starter-data-redis
 1. 配置ip spring.redis.host=127.0.0.1
 2. 测试缓存 改变redis默认jdk序列化器为json序列化
-3. 原理：CacheManager === Cache 
+3. 原理：CacheManager === Cache 缓存组件实际给缓存中存取数据。
+    0. 引入redis stater后，自动配置类由 SimpleCacheConfiguration 变为 RedisCacheConfiguration 容器中引入的是 RedisCacheManager
+    1. RedisCacheManager 创建 RedisCache 来作为缓存组件，通过操作redis来缓存数据的。
+    2. 这时，通过以上注解配置的缓存，就会存到redis数据库。 测试。。
+    3. 默认保存数据 k-v 都是object，利用序列化保存。想要保存为json，？引入redis-stater cacheManager为 RedisCacheManager。
+        默认创建的 RedisCacheManager 操作redis的时候，使用的是 RedisTemplate<Object, Object> 操作redis
+        RedisTemplate<Object, Object> 是 RedisAutoConfiguration 创建。 默认使用JDK序列化机制。
+        自定义 CacheManager
+    
 
 
 [redis官网](http://www.redis.cn/)
