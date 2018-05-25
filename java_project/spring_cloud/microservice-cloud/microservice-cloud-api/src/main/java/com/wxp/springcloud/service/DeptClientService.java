@@ -11,8 +11,13 @@ import java.util.List;
 
 /**
  *  @FeignClient  接口 + 注解 的方式调用微服务 。面向接口编程。。。  同 @Mapper  dao接口，调用数据库
+ *
+ *  fallbackFactory = DeptClientServiceFallbackFactory.class
+ *  表示这个接口中的服务调用出现问题，去找 DeptClientServiceFallbackFactory 统一分别处理。实现解耦。
+ *
  */
-@FeignClient(value = "MICROSERVICE-CLOUD-DEPT")
+// @FeignClient(value = "MICROSERVICE-CLOUD-DEPT")
+@FeignClient(value = "MICROSERVICE-CLOUD-DEPT", fallbackFactory = DeptClientServiceFallbackFactory.class)  // 增加服务熔断处理
 public interface DeptClientService {
 
 	@RequestMapping(value = "/dept/add", method = RequestMethod.POST)
