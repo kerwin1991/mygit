@@ -130,13 +130,46 @@
 
 
 
-## Ribbon ##
+## Ribbon 负载均衡 ##
 
 Spring Cloud Ribbon 是基于 Netflix Ribbon实现的一套 客户端 负载均衡 的工具。
 
-[Github地址](https://github.com/Netflix/ribbon)
+[Github源码地址](https://github.com/Netflix/ribbon)
 
 Ribbon和Eureka整合后，Consumer可以直接调用服务而不用再关心地址和端口号。
+
+涉及注解： @LoadBalanced 。(已经简化到一个注解就可以使用负载均衡)
+
+总结：Ribbon其实就是一个软负载均衡客户端组件，他可以和其他所需请求的客户端结合使用，和eureka结合只是其中的一个实例。
+    Eureka客户端，DiscoveryClient 查询服务时，会基于负载均衡算法，匹配相同服务的一个服务。默认基于轮询算法，每次查询，都是不同的ip。
+    
+```
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8003,"metadata":{},"serviceId":"microservice-cloud-dept","uri":"http://10.110.5.101:8003","secure":false}}
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8001,"serviceId":"microservice-cloud-dept","metadata":{},"uri":"http://10.110.5.101:8001","secure":false}}
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8002,"secure":false,"metadata":{},"serviceId":"microservice-cloud-dept","uri":"http://10.110.5.101:8002"}}
+```
+
+### @RibbonClient ###
+
+加在主启动类上，在启动该微服务的时候就能去加载我们的自定义Ribbon配置类，从而使配置生效。 
+
+[RandomRule源码](https://github.com/Netflix/ribbon/blob/master/ribbon-loadbalancer/src/main/java/com/netflix/loadbalancer/RandomRule.java)
+
+
+
+## Feign 负载均衡 ##
+
+用Ribbon进行负载均衡，功能强大，甚至可以自己定义算法。Feign怎么出来的？
+
+通过Eureka Ribbon 可以实现直接调用微服务名称来进行访问。http://MICROSERICE-CLOUD-DEPT
+
+现在习惯面向接口编程，微服务名字获得调用地址；通过接口 + 注解，获得我们的调用服务。
+
+只需要创建一个接口，然后在上面添加注解即可。 面向接口调用微服务
+
+
+
+
 
 
 附：
