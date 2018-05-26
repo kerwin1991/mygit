@@ -130,15 +130,81 @@
 
 
 
-## Ribbon ##
+## Ribbon 负载均衡 ##
 
 Spring Cloud Ribbon 是基于 Netflix Ribbon实现的一套 客户端 负载均衡 的工具。
 
-[Github地址](https://github.com/Netflix/ribbon)
+[Github源码地址](https://github.com/Netflix/ribbon)
 
 Ribbon和Eureka整合后，Consumer可以直接调用服务而不用再关心地址和端口号。
 
+涉及注解： @LoadBalanced 。(已经简化到一个注解就可以使用负载均衡)
 
-附：
+总结：Ribbon其实就是一个软负载均衡客户端组件，他可以和其他所需请求的客户端结合使用，和eureka结合只是其中的一个实例。
+    Eureka客户端，DiscoveryClient 查询服务时，会基于负载均衡算法，匹配相同服务的一个服务。默认基于轮询算法，每次查询，都是不同的ip。
+    
+```
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8003,"metadata":{},"serviceId":"microservice-cloud-dept","uri":"http://10.110.5.101:8003","secure":false}}
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8001,"serviceId":"microservice-cloud-dept","metadata":{},"uri":"http://10.110.5.101:8001","secure":false}}
+{"services":["microservice-cloud-dept"],"localServiceInstance":{"host":"10.110.5.101","port":8002,"secure":false,"metadata":{},"serviceId":"microservice-cloud-dept","uri":"http://10.110.5.101:8002"}}
+```
 
+### @RibbonClient ###
+
+加在主启动类上，在启动该微服务的时候就能去加载我们的自定义Ribbon配置类，从而使配置生效。 
+
+[RandomRule源码](https://github.com/Netflix/ribbon/blob/master/ribbon-loadbalancer/src/main/java/com/netflix/loadbalancer/RandomRule.java)
+
+
+
+## Feign 负载均衡 ##
+
+用Ribbon进行负载均衡，功能强大，甚至可以自己定义算法。Feign怎么出来的？
+
+通过Eureka Ribbon 可以实现直接调用微服务名称来进行访问。http://MICROSERICE-CLOUD-DEPT
+
+现在习惯面向接口编程，微服务名字获得调用地址；通过接口 + 注解，获得我们的调用服务。
+
+只需要创建一个接口，然后在上面添加注解即可。 面向接口调用微服务
+
+
+## Hystrix ##
+
+[源码](https://github.com/Netflix/Hystrix/wiki)
+
+0. 服务熔断
+
+1. 服务降级
+    
+    0. 简介
+    
+        - 整体资源快不够了，忍痛将某些服务先关掉，待渡过难关，再开启回来。
+        - 服务降级处理是在客户端实现完成的，与服务端没有关系。 Feign-80
+    
+    1. 测试
+     
+        - 启动：7001 7002 7003 provider8001 feign80 正常访问没问题后，故意关闭服务8001。测试方法 /dept/get/{id}
+        - 提示信息：此时服务provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。
+    
+
+2. 对比
+
+    - 服务熔断
+    
+        一般是某个服务故障或者异常引起，类似现实世界中 保险丝 ，当某个异常条件被触发，如 抛 RuntimeException，直接熔断整个服务，而不是一直等到此服务器超时。
+
+    - 服务降级
+    
+        所谓降级，一般是从整体负荷考虑。就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。这样做，虽然服务水平下降，但好歹可用，比直接挂掉要强。
+
+
+
+
+
+
+
+### 附： ###
+
+- mavne GAV坐标
+- 注解 @EnableXXX
 - hosts文件路径：C:\Windows\System32\drivers\etc
