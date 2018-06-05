@@ -198,6 +198,17 @@ Ribbon和Eureka整合后，Consumer可以直接调用服务而不用再关心地
         所谓降级，一般是从整体负荷考虑。就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。这样做，虽然服务水平下降，但好歹可用，比直接挂掉要强。
 
 
+## Zuul ##
+
+[源码](https://github.com/Netflix/zuul)
+
+
+## SpringCloud Config ##
+
+分布式配置中心
+
+
+
 
 
 

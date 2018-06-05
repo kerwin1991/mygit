@@ -1,0 +1,40 @@
+server:
+  port: 9527
+
+# 对外暴露微服务的名字
+spring:
+  application:
+    name: microservice-cloud-zuul-gateway
+
+# 向 eureka server 注册服务
+eureka:
+  client:
+    service-url:
+#      defaultZone: http://localhost:7001/eureka  # 单机版
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # 集群版
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+# 配置 eureka info 信息 http://ip:port/info
+info:
+  app.name: wxp-springcloud
+  company.name: www.e-nci.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+# 映射微服务  prefix  增加前缀  http://myzuul.com:9527/wxp/mydept/dept/get/4
+zuul:
+  routes:
+    mydept.serviceId: microservice-cloud-dept
+    mydept.path: /mydept/**
+  ignored-services: microservice-cloud-dept
+  prefix: /wxp
+
+
+#  profiles:
+#    active: comp
+
+---
+
+spring:
+  profiles: comp
