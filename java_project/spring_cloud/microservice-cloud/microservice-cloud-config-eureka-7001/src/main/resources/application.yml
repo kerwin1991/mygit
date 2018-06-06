@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: microservicecloud-config-eureka-client  # 同 spring.cloud.config.name
