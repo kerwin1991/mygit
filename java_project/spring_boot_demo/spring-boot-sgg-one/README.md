@@ -1,7 +1,8 @@
-##Springboot配置Profile
+## Springboot配置Profile ##
 - 多环境配置文件，文件名 application-{profile}.properties/yml，默认使用application.properties
 - yml 文档块 ---  ---  ---
 - 指定环境启动springboot：
+
     0. 配置文件指定：spring.profiles.active
     
     1. 命令行参数指定:
@@ -19,12 +20,11 @@
 
 - install：打包到本地仓库；deploy：打包到私服；package:打包到项目target目录下。
 
-##Springboot 日志
-
+## Springboot 日志 ##
 
 0. 框架，记录系统的运行时信息：日志框架。
 
-##Springboot Web开发
+## Springboot Web开发 ##
 
 - 创建项目，选中需要的模块；springboot已经配置好了，在配置文件中少量配置就可以运行；编写业务代码
 
@@ -60,7 +60,7 @@
     }
     ```
 
-##模板引擎##
+## 模板引擎 ##
 
 - JSP、Velocity、Freemarker、Thymeleaf
 
