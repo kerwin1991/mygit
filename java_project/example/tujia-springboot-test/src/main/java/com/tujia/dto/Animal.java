@@ -1,6 +1,7 @@
 package com.tujia.dto;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 
 /**
  * @author xiaopengw
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 public class Animal {
     private String color;
     private int age;
+    private double amount;
 
     @PostConstruct
     public void init() {
@@ -50,6 +52,14 @@ public class Animal {
         this.age = age;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "Animal{" +
@@ -59,9 +69,11 @@ public class Animal {
     }
 
     public static void main(String[] args) {
-        new Animal("black", 18);
-        System.out.println("------");
-        new Animal();
+        System.out.println(new Animal().getAmount());
+        System.out.println(0 == 0.0D);
+        System.out.println(new BigDecimal(125.125D).multiply(new BigDecimal(100)).intValue());
+        //System.out.println(new Double(125.125D));
+        System.out.println(new Double(0.0).isNaN());
     }
 }
 /**

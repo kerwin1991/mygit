@@ -1,11 +1,13 @@
 package com.tujia.test;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.tujia.dto.People;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author xiaopengw
@@ -39,7 +41,20 @@ public class SimpleTest {
     public static void main(String[] args) {
 //        new SimpleTest().fn1();
 //        new SimpleTest().integerToString();
-        new SimpleTest().multimapTest();
+//        new SimpleTest().multimapTest();
+        new SimpleTest().joinTest();
+    }
+
+    /**
+     * 分隔链接
+     */
+    private void joinTest() {
+        ArrayList<People> peoples = Lists.newArrayList();
+        peoples.add(new People("kk", 12));
+        peoples.add(new People("ww", 18));
+        peoples.add(new People("dd", 99));
+        String join = Joiner.on(';').join(peoples.stream().map(p -> p.getGender() + "-" + p.getUsername()).collect(Collectors.toList()));
+        System.out.println(join);// 12-kk;18-ww;99-dd
     }
 
     public void multimapTest() {

@@ -5,7 +5,7 @@ package com.tujia.dto;
  * @date 2018/7/27
  * @remark
  */
-public class People {
+public class People implements Cloneable{
     private String username;
     private int gender;
     private String[] cities;
@@ -50,4 +50,6 @@ public class People {
                 ", cities=" + cities +
                 '}';
     }
+
+
 }
