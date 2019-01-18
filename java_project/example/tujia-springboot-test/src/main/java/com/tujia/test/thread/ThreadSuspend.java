@@ -8,7 +8,7 @@ package com.tujia.test.thread;
 public class ThreadSuspend {
 
     // suspend 不会释放锁  resume 继续执行线程
-    // 如果resume发生在suspend之前，发生死锁
+    // 如果resume发生在suspend之前，容易发生死锁，不resume，不释放锁
 
     private static final Object o = new Object();
     static SuspendTest t1 = new SuspendTest("thread one");
@@ -25,8 +25,8 @@ public class ThreadSuspend {
         t2.join();
         // 实际 主线程阻塞，红点点一直在。其实，t2线程的suspend不一定在t2的resume之前执行。t1的由于sleep，一定是
         /*
-            jps             查看java.exe的进程id
-            jstack pid      查看线程(dump 线程)
+            jps             查看java.exe的进程id pid
+            jstack 'pid'      查看线程(dump 线程)
         */
         // 发现线程2还在，并且状态是runnable
     }

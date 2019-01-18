@@ -3,6 +3,7 @@ package com.tujia.test;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.tujia.dto.People;
 
@@ -42,7 +43,17 @@ public class SimpleTest {
 //        new SimpleTest().fn1();
 //        new SimpleTest().integerToString();
 //        new SimpleTest().multimapTest();
-        new SimpleTest().joinTest();
+//        new SimpleTest().joinTest();
+        new SimpleTest().mapTest();
+    }
+
+    private void mapTest() {
+
+        HashMap<Integer, String> map = Maps.newHashMap();
+        map.put(1, "aa");
+        map.put(2, "bb");
+        System.out.println(map.containsKey(3));
+        System.out.println(map.get(3));
     }
 
     /**
@@ -55,6 +66,7 @@ public class SimpleTest {
         peoples.add(new People("dd", 99));
         String join = Joiner.on(';').join(peoples.stream().map(p -> p.getGender() + "-" + p.getUsername()).collect(Collectors.toList()));
         System.out.println(join);// 12-kk;18-ww;99-dd
+        System.out.println(/*this.*/getClass().getSimpleName());
     }
 
     public void multimapTest() {

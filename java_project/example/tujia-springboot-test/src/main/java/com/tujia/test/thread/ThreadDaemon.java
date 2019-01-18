@@ -18,6 +18,7 @@ public class ThreadDaemon {
      * 守护线程：
      * 在后台默默完成一些系统性的服务，比如垃圾回收，JIT线程可以理解为守护线程。
      * 当一个java应用中，只有守护线程，java虚拟机就会自然退出。
+     * 为整个系统做支持性服务。
      *
      */
     public static class DaemonThread extends Thread {

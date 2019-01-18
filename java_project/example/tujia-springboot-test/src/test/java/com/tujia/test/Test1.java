@@ -7,10 +7,8 @@ import com.google.common.collect.Sets;
 import com.tujia.dto.People;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -27,8 +25,36 @@ public class Test1 {
 //        new Test1().fn4();
        // new Test1().fn5();
 //        new Test1().fn6();
-//        new Test1().fn7(1);
-        new Test1().fn8();
+//        new Test1().fn7(1000);
+//        new Test1().fn8();
+//        new Test1().fn9();
+        new Test1().fn10();
+
+    }
+
+    private void fn10() {
+        List<Long> unitIdList = Lists.newArrayList(3L, 6L, 1L);
+        Long along = unitIdList.stream().max(Comparator.comparing(aLong -> aLong)).get();
+        System.out.println(along);
+        Set<Integer> emptySet = Collections.emptySet();
+        System.out.println(emptySet.size());
+        System.out.println(emptySet.contains(1));
+        emptySet.addAll(Sets.newHashSet(22));
+
+    }
+
+    private void fn9() {
+        ConcurrentHashMap<String, People> cmap = new ConcurrentHashMap<>();
+        cmap.put("zs_1", new People("zs", 1));
+        System.out.println(cmap);
+        People people = cmap.computeIfAbsent("zs_2", t -> new People("zs", 2));
+        System.out.println(people);
+        cmap.computeIfAbsent("zs_3", t -> {
+            System.out.println(t);
+            return new People("zs", 3);
+        });
+        System.out.println(cmap);
+        System.out.println(BigDecimal.ZERO);
 
     }
 
@@ -38,6 +64,9 @@ public class Test1 {
         StringBuilder stringBuilder = new StringBuilder("abc");
         String a = null;
         System.out.println(stringBuilder.append(a).toString());
+
+        System.out.println((byte)0x2);
+        System.out.println(0x2);
 
     }
 
@@ -51,6 +80,7 @@ public class Test1 {
                 System.out.println("一");
                 //break;
             case 2:
+            case 1000:
                 System.out.println("二");
                 break;
             default:

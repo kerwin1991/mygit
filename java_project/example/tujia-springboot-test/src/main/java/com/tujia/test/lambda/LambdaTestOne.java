@@ -36,7 +36,14 @@ public class LambdaTestOne {
 //        fn6();
 //        fn7();
 //        fn8();
-        fn9();
+//        fn9();
+        fn10();
+    }
+
+    // distinct 去重
+    private static void fn10() {
+        List<Character> collect = list.stream().map(t -> t.getGender())/*.distinct()*/.collect(Collectors.toList());
+        System.out.println(collect);
     }
 
     /**

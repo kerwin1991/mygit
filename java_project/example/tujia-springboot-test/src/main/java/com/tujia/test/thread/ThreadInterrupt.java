@@ -13,7 +13,7 @@ public class ThreadInterrupt {
         myTestThread.start();
         Thread.sleep(2500);
         // 1  2  3 配合使用
-        myTestThread.interrupt();// 如果线程不判断 只是个通知 不理会 [3].
+        myTestThread.interrupt();// 通知线程中断(如果线程不判断 只是个通知 不理会) [3].
     }
 
 
@@ -27,19 +27,19 @@ public class ThreadInterrupt {
         public void run() {
             System.out.println(Thread.currentThread().getName());
             while (true) {
-                if (Thread.currentThread().isInterrupted()) { // [1].
+                if (Thread.currentThread().isInterrupted()) { // [1]. 判断是否被中断
                     System.out.println("---Interrupt!---");
                     break;
                 }
                 System.out.println("---"+ ++i +"---");
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(500);// 如果在sleep的过程当中，有人打招呼需要这个线程中段，也能感应到，优雅的终止线程。
                 } catch (InterruptedException e) {
                     System.out.println("---Interrupt when sleep !---");
-                    // 设置中断状态，抛出异常后会清除中断标记位
+                    // 再次设置中断状态，[1]才会判断出中断。抛出异常后会清除(通知)中断标记位，再次检测是检测不到的。
                     Thread.currentThread().interrupt();// [2].  此处设置，可以让[1]中检测到中断
                 }
-                Thread.yield();
+                Thread.yield();/*注释掉效果也不变哦*/
             }
         }
     }

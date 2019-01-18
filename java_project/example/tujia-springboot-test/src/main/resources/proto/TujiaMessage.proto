@@ -1,0 +1,34 @@
+// 默认是 proto2
+syntax = "proto3";
+package com.tujia.proto;
+
+// 人
+message Person {
+    // 身体
+    Body body = 1;
+    // 姓名
+    string name = 2;
+    // 年龄
+    int32 age = 3;
+    // 学历
+    EnumEducation education = 4;
+}
+
+// 身体
+message Body {
+    // 身高
+    float weight = 1;
+    // 体重
+    int32 height = 2;
+}
+// 学历
+enum EnumEducation {
+    // 默认
+    UNKNOWN = 0;
+    // 高中
+    SENIOR = 1;
+    // 大学
+    COLLEGE = 2;
+    // 研究生
+    GRADUATE = 3;
+}
