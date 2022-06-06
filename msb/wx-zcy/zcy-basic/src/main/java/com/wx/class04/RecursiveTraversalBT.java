@@ -2,6 +2,17 @@ package com.wx.class04;
 
 import java.util.Stack;
 
+
+/**
+ * 二叉树的遍历
+ *
+ * >>> 递归
+ *
+ * >>> 非递归
+ *
+ *
+ *
+ */
 public class RecursiveTraversalBT {
 
 
@@ -187,6 +198,42 @@ public class RecursiveTraversalBT {
             }
 
         }
+
+    }
+
+    // 一个栈 实现 后序遍历  。。左 右 头
+    public static void pos3(Node h) {
+        if (h != null) {
+            Stack<Node> stack = new Stack<>();
+            // 先把头结点放进去，为了少用一个临时变量，复用h，
+            // 多定义一个可能更好理解 hh=null, hh替换while里的h
+            stack.push(h);
+            Node c = null;
+            // 利用 h 判断 c 的左右孩子是否已经打印完了
+            while (!stack.isEmpty()) {
+                c = stack.peek();
+                //
+                // h（上次打印的)既不是当前的左孩子也不是右孩子，证明还没开始处理 新节点
+                // 左右孩子都没有处理呢，先搞左
+                // 为啥这里既关心左树 还关心了右树， h != c.right ，因为如果右树处理完了，左肯定处理了。右处理了，左就一定不需要处理了
+                if (c.left != null && h != c.left && h != c.right) {
+                    // 先搞左树
+                    stack.push(c.left);
+                }
+                // h（上次打印的)不是当前c的右孩子，证明右孩子没处理呢，去处理右
+                else if (c.right != null && h != c.right) {
+                    stack.push(c.right);
+                }
+                // 如果前两个分支都没有中，说明左右孩子都处理完了，打印当前节点，搞自己，打印
+                else {
+                    System.out.print(stack.pop().value + " ");
+                    // h 永远跟踪上次打印的节点
+                    h = c;
+                }
+
+            }
+        }
+        System.out.println();
 
     }
 
