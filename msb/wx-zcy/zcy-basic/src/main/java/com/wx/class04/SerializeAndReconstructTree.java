@@ -262,42 +262,6 @@ public class SerializeAndReconstructTree {
 
 
 
-    /*
-
-    题目：
-
-    给定二叉树结构定义
-    Node{
-        V value
-        Node left
-        Node right
-
-        // 多了一个指向父的节点
-        Node parent
-    }
-
-    给你二叉树中的某个节点，返回该节点的后继节点？
-
-
-    解释：
-
-
-                    1
-               2         3
-            4     5   6      7
-
-    后继节点：中序遍历的结果中，指定节点的下一个节点，就是后继节点
-
-    4 2 5 1 6 3 7
-
-    2的后继节点是5，7没有后继节点。
-
-     */
-
-
-
-
-
 
 
 
