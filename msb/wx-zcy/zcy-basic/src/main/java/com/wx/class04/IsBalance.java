@@ -1,6 +1,8 @@
 package com.wx.class04;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class IsBalance {
 
@@ -46,7 +48,7 @@ public class IsBalance {
 
 
 
-    public static Info process(Node X) {
+    private static Info process(Node X) {
 
 
 
@@ -140,7 +142,7 @@ public class IsBalance {
 
     // 这就是动态规划：子树返回自己的信息给父节点，父节点加工后，再向上返回，子树的信息就没用了
 
-    public static MaxDistanceInfo maxDistanceProcess(Node x) {
+    private static MaxDistanceInfo maxDistanceProcess(Node x) {
         if (x == null) {
             return new MaxDistanceInfo(0, 0);
         }
@@ -197,7 +199,8 @@ public class IsBalance {
 /*
 
 
-        例子3：给定一颗二叉树的头节点head，返回这颗二叉树中最大的二叉搜素子树的头结点
+        例子3.1：给定一颗二叉树的头节点head，返回这颗二叉树中最大的二叉搜素子树的大小
+        -- 例子3.2：给定一颗二叉树的头节点head，返回这颗二叉树中最大的二叉搜素子树的头结点。(com.wx.class04.MaxSubBSTHead)
 
         搜索二叉树：整棵树没有重复值，左树值比我小，右树比我大，每棵子树都如此
         最大：根据节点数量判断大小。有相同的返回一个就行。
@@ -244,7 +247,13 @@ public class IsBalance {
      */
 
 
-    public static BSTInfo bstProcess(Node x) {
+    // 主函数  返回最大搜索二叉子树大小
+    public static int bstMain(Node head) {
+        return bstProcess(head).maxSubBSTSize;
+    }
+
+
+    private static BSTInfo bstProcess(Node x) {
         if (x == null) {
             return null;
         }
@@ -399,7 +408,7 @@ public class IsBalance {
     }
 
 
-    public static HappyInfo happyProcess(Employee x) {
+    private static HappyInfo happyProcess(Employee x) {
         // 基层员工没有nexts
         if (x.nexts.isEmpty()) {
             // 来: x.happy  不来 0
@@ -445,6 +454,295 @@ public class IsBalance {
             this.no = no;
         }
     }
+
+
+    /*
+
+
+        例5：给定一颗二叉树的头节点head，返回这颗二叉树是不是满二叉树
+        满二叉树：每一层节点都是满的
+        满足的性质：高度 L 节点数量 N ， 2^L - 1 = N
+
+
+     */
+
+
+    /**
+     * 是否是满二叉树
+     * 主函数
+     * @param head
+     * @return
+     */
+    public static boolean isFull(Node head) {
+
+        if (head == null) {
+            return true;
+        }
+        FullInfo fullInfo = isFullProcess(head);
+        return (1 << fullInfo.height) - 1 == fullInfo.nodes;
+
+
+    }
+
+
+    private static FullInfo isFullProcess(Node x) {
+        if (x == null) {
+            return new FullInfo(0, 0);
+        }
+        FullInfo leftInfo = isFullProcess(x.getLeft());
+        FullInfo rightInfo = isFullProcess(x.getRight());
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        int nodes = leftInfo.nodes + rightInfo.nodes + 1;
+        return new FullInfo(height, nodes);
+    }
+
+
+
+
+    public static class FullInfo{
+        public int height;
+        public int nodes;
+
+        public FullInfo(int height, int nodes) {
+            this.height = height;
+            this.nodes = nodes;
+        }
+    }
+
+
+
+
+
+
+    /*
+
+
+        例6：给定一颗二叉树的头节点head，返回这颗二叉树是不是完全二叉树
+        完全二叉树：不双全的节点只能出现在最后
+
+        满足的性质：(写代码的思路)
+        - 任何节点，有右 没有 左，肯定不是完全二叉树
+        - 一旦遇到左右孩子不双全，后序遇到的节点都是叶子节点
+
+
+                    1
+             2              3
+         4       5      6       7
+
+       8   9   10  11  12 13  14
+
+       7不双全，后面的 8-14都是叶子节点
+
+
+
+
+                      1
+             2              3
+         4       5      6       7
+
+       8   9
+
+
+       5节点不双全，后面的6 7 8 9 都是叶子节点
+
+     */
+
+
+    // 解法一：宽度优先遍历的解法
+    public static boolean isCBT1(Node head) {
+        if (head == null) {
+            return true;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(head);
+        // 是否出现了不双全的节点，只有左没有右，或者左右都没有
+        boolean leaf = false;
+        // 宽度优先遍历
+        while (!queue.isEmpty()) {
+
+            Node node = queue.poll();
+            // System.out.println(node.getValue());
+
+            Node l = node.getLeft();
+            Node r = node.getRight();
+            if (
+                    (l == null && r != null)   // 有右没左 直接false
+
+                    || (leaf && (l!=null || r!=null))  // 出现了不全节点后，出现了非叶子节点，直接false
+                //  || (leaf && !(l==null && r==null))
+
+                    ) {
+                return false;
+            }
+
+
+            if (l != null) {
+                queue.add(l);
+            }
+            if (r != null) {
+                queue.add(r);
+            }
+
+            // 遇到左右孩子不双全的节点了
+            if (!(l != null && r != null)) {
+                leaf = true;
+            }
+            /*if (l == null || r == null) {
+                leaf = true;
+            }*/
+
+        }
+        return true;
+    }
+
+
+
+
+    // 解法二：递归套路的解法
+
+
+    /*
+
+
+
+    x的左树  右树
+
+    4种情况
+    - 左右都是满二叉
+    - 左边不满，右满
+    - 左边满没有缺口，右满
+    - 左边满 右边有缺口
+
+    x需要向左右要的信息：三个信息
+    左树是否满的  高度  是否是完全二叉树
+    右树是否满的  高度  是否是完全二叉树
+
+
+    4种情况示例
+
+    - 如果左树满&&右树满 && 左高==右高，就能确定x也是满的
+            a
+         b     c
+      d    e  f  g
+
+    - 左树是完全二叉树 右是满二叉树 左的高度大于右高度
+
+            a
+         b     c
+      d
+
+    - 左满，右满，左高度比右高度大1
+            a
+         b     c
+      d    e
+
+    - 左边满，右完全二叉树，且高度一样
+            a
+         b     c
+      d    e  f
+
+    如果四种都不成立，必不是完全二叉树。满足一种情况就是完全二叉树
+
+     */
+
+
+
+
+
+    public static class Info2{
+        // 是否满二叉树
+        public boolean isFull;
+        // 是否完全二叉树
+        public boolean isCBT;
+        // 高度
+        public int height;
+
+        public Info2(boolean isFull, boolean isCBT, int height) {
+            this.isFull = isFull;
+            this.isCBT = isCBT;
+            this.height = height;
+        }
+    }
+
+
+    // 对于任何节点都要返回Info2
+    public static Info2 process2(Node x) {
+        if (x == null) {
+            return new Info2(true, true, 0);
+        }
+        Info2 leftInfo = process2(x.getLeft());
+        Info2 rightInfo = process2(x.getRight());
+
+        int heigh = Math.max(leftInfo.height, rightInfo.height) + 1;
+
+        boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
+
+        // 最不好加工的是是否是完全二叉树 分4种情况
+        boolean isCBT = false;
+        if (isFull) {
+            // 情况1
+            isCBT = true;
+        } else {
+            // 不满  但可能是完全二叉树
+            if (leftInfo.isCBT && rightInfo.isCBT) {
+                // 左右必须都是完全 才有可能是完全
+
+                // 情况2
+                if (leftInfo.isCBT
+                        && rightInfo.isFull
+                        && leftInfo.height == rightInfo.height + 1) {
+                    isCBT = true;
+                }
+                // 情况3
+                if (leftInfo.isFull
+                        && rightInfo.isFull
+                        && leftInfo.height == rightInfo.height + 1) {
+                    isCBT = true;
+                }
+                // 情况4
+                if (leftInfo.isFull
+                        && rightInfo.isCBT
+                        && leftInfo.height == rightInfo.height) {
+                    isCBT = true;
+                }
+            }
+        }
+        return new Info2(isFull, isCBT, heigh);
+    }
+
+
+
+
+
+    /*
+
+
+        例7：给定一棵二叉树的头结点head，和另外两个节点 a b，返回a b的最低公共祖先。
+
+
+                    1
+             2              3
+         4       5      6       7
+
+       8   9   10  11  12 13  14
+
+
+
+                      1
+             2              3
+         4       5      6       7
+
+       8   9   10
+             11
+
+
+
+     */
+
+
+
+
 
 
 
